@@ -1,14 +1,14 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-set VERSION=0.7v
+set VERSION=0.8v
 SET DEBUG=ON
  
 REM MENU ETIQUETES
 :MENU
 cls
-echo.
 ECHO ver. '%VERSION%'
+ECHO.
 echo #### MENU ETIQUETES ####
 echo.
 echo 1.- Utilitzar l'etiqueta de Pinyana Hueso
@@ -19,13 +19,17 @@ echo.
 echo ########################
 echo.
 echo.
-echo.
 echo #### MENU ETIQUETES PER DEFECTE ####
 echo.
 echo 5.- ETIQUETA RIBERA1
 echo 6.- ETIQUETA RIBERA2
+echo 7.- ETIQUETA RIBERA2 NOVAPRACOSA
+echo 8.- NO Blanca (Variable)
+echo 9.- CESTAS ALDI (GGN + LOTE)
 echo.
 echo ####################################
+ECHO.
+ECHO.
 
 set choice=
 set /p choice="Elegeix una Opcio: "
@@ -42,8 +46,22 @@ if '%choice%'=='6' (
 	           SET ETIQUETA=RIBERA2
 		   goto :MAQUINA
 		   )
+if '%choice%'=='7' (
+	           SET ETIQUETA=RIBERA2N
+		   goto :MAQUINA
+		   )
+if '%choice%'=='8' (
+	           SET ETIQUETA=NOCODIGO
+		   goto :MAQUINA
+		   )
+if '%choice%'=='9' (
+	           SET ETIQUETA=CESTASALDI
+		   goto :EMALLAR
+		   )
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
+PAUSE
+GOTO :MENU
 
 
 REM COPIAR ETIQUETES PREPACKING
@@ -87,6 +105,20 @@ if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CAIXA_LINEAD.LAB" ( ECHO ETIQUE
 rem PAUSE
 GOTO :END
 
+
+REM ETIQUETAS Y CORBATAS (CAMBIAR LAS CORBATAS Y TAMBIEN LA ETIQUETA DE LA MAQUINA PREPACKING)
+:EMALLAR
+IF %ETIQUETA%==CESTASALDI (
+ 	IF %DEBUG%==ON ( 
+ 			ECHO HAS EEGIT LA ETIQUETA ALDI NECTARINA DE PINYANA 
+ 			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\Ribera2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
+ )
+GOTO :END2
+
+
 REM SELECCIONAR MAQUINA
 :MAQUINA
 cls
@@ -119,6 +151,9 @@ if '%choice%'=='3' (
 if '%choice%'=='4' goto :END2
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
+PAUSE
+GOTO :MAQUINA
+
 
 REM FEM LES COPIES
 :COPIAR
@@ -168,6 +203,55 @@ IF %ETIQUETA%==RIBERA2 (
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
         )
 )
+
+IF %ETIQUETA%==RIBERA2N (
+	IF %MAQUINA%==SAMO (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA2 NOVAPRACOSA I LA MAQUINA SAMO 
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_NOVAPRACOSA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+        )
+	IF %MAQUINA%==MONOCALIBRE (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA2 NOVAPRACOSA I LA MAQUINA MONOCALIBRE
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_NOVAPRACOSA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+        )
+	IF %MAQUINA%==LINEAD (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA2 NOVAPRACOSA I LA MAQUINA LINEAD
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_NOVAPRACOSA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+        )
+)
+
+IF %ETIQUETA%==NOCODIGO (
+	IF %MAQUINA%==SAMO (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA NO_CODIGO I LA MAQUINA SAMO 
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NO_blanca_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+        )
+	IF %MAQUINA%==MONOCALIBRE (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA NO_CODIGO I LA MAQUINA MONOCALIBRE
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NO_blanca_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+        )
+	IF %MAQUINA%==LINEAD (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA NO_CODIGO I LA MAQUINA LINEAD
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NO_blanca_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+        )
+)
+
 GOTO :END2
 
 
@@ -196,6 +280,8 @@ if '%choice%'=='3' goto :HUESOLINEAD
 if '%choice%'=='4' goto :END2
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
+PAUSE
+GOTO :HUESO
 
 REM COPIAR ETIQUETA PINYANA NOHUESO
 :NOHUESO
@@ -221,6 +307,8 @@ if '%choice%'=='3' goto :NOHUESOLINEAD
 if '%choice%'=='4' goto :END2
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
+PAUSE
+GOTO :NOHUESO
 
 :HUESOSAMO
 REM COPIEM LA ETIQUETA HUESO PER LA SAMO
@@ -250,7 +338,7 @@ GOTO :END2
 
 
 :END
-REM Llimpiem els fitxers utilitzats
+REM Llimpiem els fitxers utilitzats (NOMES EN CAS ETIQUETA LLIURE)
 
 REM MAQUINA PREPACKING
 
