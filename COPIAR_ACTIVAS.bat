@@ -1,7 +1,7 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-set VERSION=0.9v
+set VERSION=1.0v
 SET DEBUG=ON
 SET SEMAFORO=1
 
@@ -85,10 +85,11 @@ REM COPIAR ETIQUETES PREPACKING
 :PREPACKING
 
 if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB" ( 
+:: En principi no necessitarem Corbata.lab, pero ho mantenim per si de cas.
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB	
+	if not exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA1.LAB" ( copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB )
+	if not exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA2.LAB" ( copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB )
+	if not exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA3.LAB" ( copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB )	
 	)
 if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA1.LAB" ( copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA1.LAB \\192.168.1.10\c\ETIQUETAS\)
 if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA2.LAB" ( copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA2.LAB \\192.168.1.10\c\ETIQUETAS\)
@@ -135,6 +136,9 @@ IF %ETIQUETA%==CESTASALDI (
  			PAUSE
 			)
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\Ribera2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
  )
 GOTO :END2
