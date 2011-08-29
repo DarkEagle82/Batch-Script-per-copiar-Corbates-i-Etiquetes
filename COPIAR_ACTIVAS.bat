@@ -26,22 +26,24 @@ echo.
 echo 1.- Utilitzar l'etiqueta de Pinyana Hueso
 echo 2.- Utilitzar l'etiqueta de Pinyana SIN Hueso
 echo 3.- Etiqueta Lliure (Sergi)
-ECHO 4.- SORTIR
+ECHO S.- SORTIR
 echo.
 echo ########################
 echo.
 echo.
-echo #### MENU ETIQUETES PER DEFECTE ####
+echo #### MENU ETIQUETES PER DEFECTE ###################
 echo.
-echo 5.- ETIQUETA RIBERA1
-echo 6.- ETIQUETA RIBERA2
-echo 7.- ETIQUETA RIBERA2 NOVAPRACOSA
-echo 8.- NO Blanca (Variable)
-echo 9.- CESTAS ALDI (GGN + LOTE)
+echo 4.- ETIQUETA RIBERA1
+echo 5.- ETIQUETA RIBERA2
+echo 6.- ETIQUETA RIBERA2 NOVAPRACOSA (ALDI 7KG)
+echo 7.- NO Blanca (Variable)
+echo 8.- CESTAS ALDI (GGN + LOTE)
+echo 9.- CESTAS ALDI NOVAPRACOSA (GGN + LOTE)
+echo A.- CESTAS Nectarina Supermercat (Europool System)
 echo.
-echo ####################################
+echo ###################################################
 ECHO.
-ECHO 4.- SORTIR
+ECHO S.- SORTIR
 ECHO.
 
 set choice=
@@ -50,28 +52,36 @@ if not '%choice%'=='' set choice=%choice:~0,1%
 if '%choice%'=='1' goto :HUESO
 if '%choice%'=='2' goto :NOHUESO
 if '%choice%'=='3' goto :PREPACKING
-if '%choice%'=='4' (
+if '%choice%'=='S' (
 		    set SEMAFORO=0
 		    goto :END2
 )
-if '%choice%'=='5' (
+if '%choice%'=='4' (
 		   SET ETIQUETA=RIBERA1
 		   goto :MAQUINA
                    ) 
-if '%choice%'=='6' (
+if '%choice%'=='5' (
 	           SET ETIQUETA=RIBERA2
 		   goto :MAQUINA
 		   )
-if '%choice%'=='7' (
+if '%choice%'=='6' (
 	           SET ETIQUETA=RIBERA2N
 		   goto :MAQUINA
 		   )
-if '%choice%'=='8' (
+if '%choice%'=='7' (
 	           SET ETIQUETA=NOCODIGO
 		   goto :MAQUINA
 		   )
-if '%choice%'=='9' (
+if '%choice%'=='8' (
 	           SET ETIQUETA=CESTASALDI
+		   goto :EMALLAR
+		   )
+if '%choice%'=='9' (
+	           SET ETIQUETA=CESTASALDIN
+		   goto :EMALLAR
+		   )
+if '%choice%'=='A' (
+	           SET ETIQUETA=CESTASEPS
 		   goto :EMALLAR
 		   )
 
@@ -132,7 +142,7 @@ REM ETIQUETAS Y CORBATAS (CAMBIAR LAS CORBATAS Y TAMBIEN LA ETIQUETA DE LA MAQUI
 :EMALLAR
 IF %ETIQUETA%==CESTASALDI (
  	IF %DEBUG%==ON ( 
- 			ECHO HAS EEGIT LA ETIQUETA ALDI NECTARINA DE PINYANA 
+ 			ECHO HAS EEGIT LA ETIQUETA ALDI
  			PAUSE
 			)
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
@@ -141,6 +151,29 @@ IF %ETIQUETA%==CESTASALDI (
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\Ribera2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
  )
+IF %ETIQUETA%==CESTASALDIN (
+ 	IF %DEBUG%==ON ( 
+ 			ECHO HAS EEGIT LA ETIQUETA ALDI NOVAPRACOSA
+ 			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_lote_ggn_ean8_CORB_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\Ribera2_CAIXA_NOVAPRACOSA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
+ )
+IF %ETIQUETA%==CESTASEPS (
+ 	IF %DEBUG%==ON ( 
+ 			ECHO HAS EEGIT LA ETIQUETA EUROPOOL SYSTEM 
+ 			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
+ )
+
 GOTO :END2
 
 
@@ -153,8 +186,9 @@ echo.
 echo Quina maquina ha de tenir la Etiqueta de %ETIQUETA% ?
 echo 1.- SAMO
 echo 2.- MONOCALIBRE VIEJA
-ECHO 3.- MONOCALIBRE NUEVA (LINEAD)
-echo 4.- SORTIR
+echo 3.- MONOCALIBRE NUEVA (LINEAD)
+echo 4.- TODAS las Maquinas.
+echo S.- SORTIR
 echo.
 echo.
 
@@ -173,7 +207,11 @@ if '%choice%'=='3' (
                    SET  MAQUINA=LINEAD
 		   goto :COPIAR
 	           )
-if '%choice%'=='4' goto :END2
+if '%choice%'=='4' (
+                   SET  MAQUINA=TODAS
+		   goto :COPIAR
+	           )
+if '%choice%'=='S' goto :END2
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
 PAUSE
@@ -204,6 +242,15 @@ IF %ETIQUETA%==RIBERA1 (
 			)
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
         )
+	IF %MAQUINA%==TODAS (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA1 i TOTES les Maquines 
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+        )
 )
 IF %ETIQUETA%==RIBERA2 (
 	IF %MAQUINA%==SAMO (
@@ -225,6 +272,15 @@ IF %ETIQUETA%==RIBERA2 (
 			ECHO HAS EEGIT LA ETIQUETA RIBERA2 I LA MAQUINA LINEAD
 			PAUSE
 			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+        )
+	IF %MAQUINA%==TODAS (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA2 I TOTES les Maquines
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
         )
 )
@@ -251,6 +307,15 @@ IF %ETIQUETA%==RIBERA2N (
 			)
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_NOVAPRACOSA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
         )
+	IF %MAQUINA%==TODAS (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA2 NOVAPRACOSA I TOTES les Maquines
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_NOVAPRACOSA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_NOVAPRACOSA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_NOVAPRACOSA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+        )
 )
 
 IF %ETIQUETA%==NOCODIGO (
@@ -275,6 +340,15 @@ IF %ETIQUETA%==NOCODIGO (
 			)
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NO_blanca_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
         )
+	IF %MAQUINA%==TODAS (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA NO_CODIGO I TOTES les Maquines
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NO_blanca_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NO_blanca_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NO_blanca_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+        )
 )
 
 GOTO :END2
@@ -292,7 +366,8 @@ echo Quina maquina ha de tenir la Etiqueta de Pinyana HUESO ?
 echo 1.- SAMO
 echo 2.- MONOCALIBRE VIEJA
 ECHO 3.- MONOCALIBRE NUEVA (LINEAD)
-echo 4.- SORTIR
+echo 4.- TODAS las Maquinas.
+echo S.- SORTIR
 echo.
 echo.
 
@@ -302,7 +377,8 @@ if not '%choice%'=='' set choice=%choice:~0,1%
 if '%choice%'=='1' goto :HUESOSAMO
 if '%choice%'=='2' goto :HUESOMONO
 if '%choice%'=='3' goto :HUESOLINEAD
-if '%choice%'=='4' goto :END2
+if '%choice%'=='4' goto :HUESOTODAS
+if '%choice%'=='S' goto :END2
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
 PAUSE
@@ -319,7 +395,8 @@ echo Quina maquina ha de tenir la Etiqueta de Pinyana NOHUESO ?
 echo 1.- SAMO
 echo 2.- MONOCALIBRE VIEJA
 ECHO 3.- MONOCALIBRE NUEVA (LINEAD)
-echo 4.- SORTIR
+echo 4.- TODAS las Maquinas.
+echo S.- SORTIR
 echo.
 echo.
 
@@ -329,7 +406,8 @@ if not '%choice%'=='' set choice=%choice:~0,1%
 if '%choice%'=='1' goto :NOHUESOSAMO
 if '%choice%'=='2' goto :NOHUESOMONO
 if '%choice%'=='3' goto :NOHUESOLINEAD
-if '%choice%'=='4' goto :END2
+if '%choice%'=='4' goto :NOHUESOTODAS
+if '%choice%'=='S' goto :END2
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
 PAUSE
@@ -347,6 +425,12 @@ GOTO :END2
 REM COPIEM LA ETIQUETA HUESO PER LA LINEAD
 copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\HUESO.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
 GOTO :END2
+:HUESOTODAS
+REM COPIEM LA ETIQUETA A TODAS LAS MAQUINAS
+copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\HUESO.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\HUESO.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\HUESO.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+GOTO :END2
 
 :NOHUESOSAMO
 REM COPIEM LA ETIQUETA NOHUESO PER LA SAMO
@@ -358,6 +442,12 @@ copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NOHUESO.LAB \\192.168.1.10\c\ETIQUET
 GOTO :END2
 :NOHUESOLINEAD
 REM COPIEM LA ETIQUETA NOHUESO PER LA LINEAD
+copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NOHUESO.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+GOTO :END2
+:NOHUESOTODAS
+REM COPIEM LA ETIQUETA A TODAS LAS MAQUINAS
+copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NOHUESO.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NOHUESO.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
 copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NOHUESO.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
 GOTO :END2
 
