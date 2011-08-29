@@ -1,8 +1,8 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-REM Version 0.6v
-set VERSION=0.6v
+set VERSION=0.7v
+SET DEBUG=ON
  
 REM MENU ETIQUETES
 :MENU
@@ -16,7 +16,16 @@ echo 2.- Utilitzar l'etiqueta de Pinyana SIN Hueso
 echo 3.- Etiqueta Lliure (Sergi)
 ECHO 4.- SORTIR
 echo.
+echo ########################
 echo.
+echo.
+echo.
+echo #### MENU ETIQUETES PER DEFECTE ####
+echo.
+echo 5.- ETIQUETA RIBERA1
+echo 6.- ETIQUETA RIBERA2
+echo.
+echo ####################################
 
 set choice=
 set /p choice="Elegeix una Opcio: "
@@ -25,6 +34,14 @@ if '%choice%'=='1' goto :HUESO
 if '%choice%'=='2' goto :NOHUESO
 if '%choice%'=='3' goto :PREPACKING
 if '%choice%'=='4' goto :END2
+if '%choice%'=='5' (
+		   SET ETIQUETA=RIBERA1
+		   goto :MAQUINA
+                   ) 
+if '%choice%'=='6' (
+	           SET ETIQUETA=RIBERA2
+		   goto :MAQUINA
+		   )
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
 
@@ -69,6 +86,90 @@ if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CAIXA_LINEAD.LAB" ( copy \\192.
 if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CAIXA_LINEAD.LAB" ( ECHO ETIQUETES LINEAD COPIADES !! )
 rem PAUSE
 GOTO :END
+
+REM SELECCIONAR MAQUINA
+:MAQUINA
+cls
+ECHO ver. '%VERSION%'
+echo #### MENU SELECCION MAQUINA ETIQUETA %ETIQUETA% ####
+echo.
+echo Quina maquina ha de tenir la Etiqueta de %ETIQUETA% ?
+echo 1.- SAMO
+echo 2.- MONOCALIBRE VIEJA
+ECHO 3.- MONOCALIBRE NUEVA (LINEAD)
+echo 4.- SORTIR
+echo.
+echo.
+
+set choice=
+set /p choice="Elegeix una Opcio: "
+if not '%choice%'=='' set choice=%choice:~0,1%
+if '%choice%'=='1' (
+                   SET  MAQUINA=SAMO
+		   goto :COPIAR
+	           )
+if '%choice%'=='2' (
+                   SET  MAQUINA=MONOCALIBRE
+		   goto :COPIAR
+	           )
+if '%choice%'=='3' (
+                   SET  MAQUINA=LINEAD
+		   goto :COPIAR
+	           )
+if '%choice%'=='4' goto :END2
+
+ECHO "%choice%" No es valida. Tria altre cop una opcio
+
+REM FEM LES COPIES
+:COPIAR
+IF %ETIQUETA%==RIBERA1 (
+	IF %MAQUINA%==SAMO (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA1 I LA MAQUINA SAMO 
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+        )
+	IF %MAQUINA%==MONOCALIBRE (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA1 I LA MAQUINA MONOCALIBRE
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+        )
+	IF %MAQUINA%==LINEAD (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA1 I LA MAQUINA LINEAD 
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+        )
+)
+IF %ETIQUETA%==RIBERA2 (
+	IF %MAQUINA%==SAMO (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA2 I LA MAQUINA SAMO 
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+        )
+	IF %MAQUINA%==MONOCALIBRE (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA2 I LA MAQUINA MONOCALIBRE
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+        )
+	IF %MAQUINA%==LINEAD (
+	IF %DEBUG%==ON ( 
+			ECHO HAS EEGIT LA ETIQUETA RIBERA2 I LA MAQUINA LINEAD
+			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+        )
+)
+GOTO :END2
+
 
 
 REM COPIAR ETIQUETA PINYANA HUESO
