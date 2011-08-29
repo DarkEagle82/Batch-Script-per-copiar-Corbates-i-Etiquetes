@@ -1,14 +1,26 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-set VERSION=0.8v
+set VERSION=0.9v
 SET DEBUG=ON
+SET SEMAFORO=1
+
+REM COLOR
+REM   0 = Negro       8 = Gris
+REM   1 = Azul        9 = Azul claro
+REM   2 = Verde       A = Verde claro
+REM   3 = Aguamarina  B = Aguamarina claro
+REM   4 = Rojo        C = Rojo claro
+REM   5 = Púrpura     D = Púrpura claro
+REM   6 = Amarillo    E = Amarillo claro
+REM   7 = Blanco      F = Blanco brillante
  
 REM MENU ETIQUETES
 :MENU
 cls
 ECHO ver. '%VERSION%'
 ECHO.
+color F
 echo #### MENU ETIQUETES ####
 echo.
 echo 1.- Utilitzar l'etiqueta de Pinyana Hueso
@@ -29,6 +41,7 @@ echo 9.- CESTAS ALDI (GGN + LOTE)
 echo.
 echo ####################################
 ECHO.
+ECHO 4.- SORTIR
 ECHO.
 
 set choice=
@@ -37,7 +50,10 @@ if not '%choice%'=='' set choice=%choice:~0,1%
 if '%choice%'=='1' goto :HUESO
 if '%choice%'=='2' goto :NOHUESO
 if '%choice%'=='3' goto :PREPACKING
-if '%choice%'=='4' goto :END2
+if '%choice%'=='4' (
+		    set SEMAFORO=0
+		    goto :END2
+)
 if '%choice%'=='5' (
 		   SET ETIQUETA=RIBERA1
 		   goto :MAQUINA
@@ -67,8 +83,13 @@ GOTO :MENU
 REM COPIAR ETIQUETES PREPACKING
 
 :PREPACKING
-rem if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB" ( ECHO COPIANT ETIQUETES PREPACKING ! )
-if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB" ( copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\ )
+
+if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB" ( 
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB	
+	)
 if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA1.LAB" ( copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA1.LAB \\192.168.1.10\c\ETIQUETAS\)
 if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA2.LAB" ( copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA2.LAB \\192.168.1.10\c\ETIQUETAS\)
 if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA3.LAB" ( copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\CORBATA3.LAB \\192.168.1.10\c\ETIQUETAS\)
@@ -356,7 +377,8 @@ goto :END2
 
 :END2
 ECHO.
-ECHO ***************** TOTES LES COPIES REALITZADES !!! ********************
+IF %SEMAFORO%==1 ( ECHO ***************** TOTES LES COPIES REALITZADES !!! ******************** )  ELSE ( ECHO ***************** NO S'HA REALITZAT CAP COPIA !!! ******************** )
 ECHO.
 ECHO.
-pause
+echo Apreta una tecla per a Sortir ...
+pause>nul
