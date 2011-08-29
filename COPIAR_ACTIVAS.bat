@@ -1,13 +1,14 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-REM Version 0.5v
-
+REM Version 0.6v
+set VERSION=0.6v
  
 REM MENU ETIQUETES
 :MENU
 cls
 echo.
+ECHO ver. '%VERSION%'
 echo #### MENU ETIQUETES ####
 echo.
 echo 1.- Utilitzar l'etiqueta de Pinyana Hueso
@@ -17,12 +18,15 @@ ECHO 4.- SORTIR
 echo.
 echo.
 
-choice /M "Elegeix una Opcio: " /c 1234
+set choice=
+set /p choice="Elegeix una Opcio: "
+if not '%choice%'=='' set choice=%choice:~0,1%
+if '%choice%'=='1' goto :HUESO
+if '%choice%'=='2' goto :NOHUESO
+if '%choice%'=='3' goto :PREPACKING
+if '%choice%'=='4' goto :END2
 
-if errorlevel 1 goto :HUESO
-if errorlevel 2 goto :NOHUESO
-if errorlevel 3 goto :PREPACKING
-if errorlevel 4 goto :END2
+ECHO "%choice%" No es valida. Tria altre cop una opcio
 
 
 REM COPIAR ETIQUETES PREPACKING
@@ -71,6 +75,7 @@ REM COPIAR ETIQUETA PINYANA HUESO
 :HUESO
 cls
 echo.
+ECHO ver. '%VERSION%'
 echo #### MENU SELECCION MAQUINA ETIQUETA HUESO ####
 echo.
 echo Quina maquina ha de tenir la Etiqueta de Pinyana HUESO ?
@@ -81,17 +86,21 @@ echo 4.- SORTIR
 echo.
 echo.
 
-choice /M "Elegeix una Opcio: " /c 1234
+set choice=
+set /p choice="Elegeix una Opcio: "
+if not '%choice%'=='' set choice=%choice:~0,1%
+if '%choice%'=='1' goto :HUESOSAMO
+if '%choice%'=='2' goto :HUESOMONO
+if '%choice%'=='3' goto :HUESOLINEAD
+if '%choice%'=='4' goto :END2
 
-if errorlevel 1 goto :HUESOSAMO
-if errorlevel 2 goto :HUESOMONO
-if errorlevel 3 goto :HUESOLINEAD
-if errorlevel 4 goto :END2
+ECHO "%choice%" No es valida. Tria altre cop una opcio
 
 REM COPIAR ETIQUETA PINYANA NOHUESO
 :NOHUESO
 cls
 echo.
+ECHO ver. '%VERSION%'
 echo #### MENU SELECCION MAQUINA ETIQUETA NOHUESO ####
 echo.
 echo Quina maquina ha de tenir la Etiqueta de Pinyana NOHUESO ?
@@ -102,12 +111,15 @@ echo 4.- SORTIR
 echo.
 echo.
 
-choice /M "Elegeix una Opcio: " /c 1234
+set choice=
+set /p choice="Elegeix una Opcio: "
+if not '%choice%'=='' set choice=%choice:~0,1%
+if '%choice%'=='1' goto :NOHUESOSAMO
+if '%choice%'=='2' goto :NOHUESOMONO
+if '%choice%'=='3' goto :NOHUESOLINEAD
+if '%choice%'=='4' goto :END2
 
-if errorlevel 1 goto :NOHUESOSAMO
-if errorlevel 2 goto :NOHUESOMONO
-if errorlevel 3 goto :NOHUESOLINEAD
-if errorlevel 4 goto :NOEND2
+ECHO "%choice%" No es valida. Tria altre cop una opcio
 
 :HUESOSAMO
 REM COPIEM LA ETIQUETA HUESO PER LA SAMO
