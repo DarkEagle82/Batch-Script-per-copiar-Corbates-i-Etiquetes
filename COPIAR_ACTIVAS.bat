@@ -1,9 +1,11 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-set VERSION=1.6v
+set VERSION=1.7v
 SET DEBUG=ON
 :: SET SEMAFORO=1
+
+:: TODO: Unset variables al END2
 
 REM.-- Set the window title
 SET title=Programa Manicuplacio
@@ -95,7 +97,7 @@ if /I '%choice%'=='B' (
 		   )
 if /I '%choice%'=='C' (
 	           SET ETIQUETA=LVH7KG
-		   goto :MAQUINA
+		   goto :NECTOMEL
 		   )
 if /I '%choice%'=='D' (
 	           SET ETIQUETA=CESTASNOORALIA
@@ -184,10 +186,16 @@ set /p choice="Elegeix una Opcio: "
 if not '%choice%'=='' set choice=%choice:~0,1%
 if '%choice%'=='1' (
                    SET  PRODUCTO=NECTARINES
+		   IF %ETIQUETA%==LVH7KG (
+			GOTO :MAQUINA
+		   )
 		   goto :EMALLAR
 	           )
 if '%choice%'=='2' (
                    SET  PRODUCTO=PERZIKEN
+		   IF %ETIQUETA%==LVH7KG (
+			GOTO :MAQUINA
+		   )
 		   goto :EMALLAR
 	           )
 if /I '%choice%'=='S' goto :END2
@@ -449,34 +457,56 @@ IF %ETIQUETA%==RIBERA2N (
 
 IF %ETIQUETA%==LVH7KG (
 	IF %MAQUINA%==SAMO (
-	IF %DEBUG%==ON ( 
+		IF %DEBUG%==ON ( 
 			ECHO HAS ELEGIT LA ETIQUETA LVH 7 KILOS I LA MAQUINA SAMO 
 			PAUSE
 			)
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
-        )
+		IF %PRODUCTO%==NECTARINES (
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+        	)
+		IF %PRODUCTO%==PERZIKEN (
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\PERZIKEN_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+		)
+	)
 	IF %MAQUINA%==MONOCALIBRE (
-	IF %DEBUG%==ON ( 
+		IF %DEBUG%==ON ( 
 			ECHO HAS EEGIT LA ETIQUETA LVH 7 KILOS I LA MAQUINA MONOCALIBRE
 			PAUSE
 			)
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+		IF %PRODUCTO%==NECTARINES (
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+		)
+		IF %PRODUCTO%==PERZIKEN (
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\PERZIKEN_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+		)
         )
 	IF %MAQUINA%==LINEAD (
-	IF %DEBUG%==ON ( 
+		IF %DEBUG%==ON ( 
 			ECHO HAS ELEGIT LA ETIQUETA LVH 7 KILOS I LA MAQUINA LINEAD
 			PAUSE
 			)
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+		IF %PRODUCTO%==NECTARINES (
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+		)
+		IF %PRODUCTO%==PERZIKEN (
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\PERZIKEN_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+		)	
         )
 	IF %MAQUINA%==TODAS (
-	IF %DEBUG%==ON ( 
+		IF %DEBUG%==ON ( 
 			ECHO HAS ELEGIT LA ETIQUETA LVH 7 KILOS I TOTES les Maquines
 			PAUSE
 			)
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+		IF %PRODUCTO%==NECTARINES (
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+		)
+		IF %PRODUCTO%==PERZIKEN (
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\PERZIKEN_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\PERZIKEN_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+			copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\PERZIKEN_LVH_NO_7kilos_VAR_CAIXA.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+		)
         )
 )
 
@@ -631,6 +661,12 @@ if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CAIXA_LINEAD.LAB" ( del /s \\19
 goto :END2
 
 :END2
+
+:: Unset variables
+set ETIQUETA=
+set PRODUCTO=
+set MAQUINA=
+
 PAUSE
 goto :MENU
 
