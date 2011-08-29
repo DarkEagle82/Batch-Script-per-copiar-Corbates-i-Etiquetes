@@ -1,9 +1,9 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-set VERSION=1.4v
+set VERSION=1.5v
 SET DEBUG=ON
-SET SEMAFORO=1
+:: SET SEMAFORO=1
 
 REM.-- Set the window title
 SET title=Programa Manicuplacio
@@ -21,6 +21,7 @@ REM   7 = Blanco      F = Blanco brillante
  
 REM MENU ETIQUETES
 :MENU
+SET SEMAFORO=1
 cls
 ECHO ver. '%VERSION%'
 ECHO.
@@ -41,7 +42,7 @@ echo 4. ETIQUETA RIBERA1				A. CESTAS. Nectarina. Super Mercat
 echo 5. ETIQUETA RIBERA2 GGN				B. CESTAS. Nectarina. Super Mercat2. NOVAPRACOSA
 echo 6. ETIQUETA RIBERA2 NOVAPRACOSA (ALDI 7KG)	C. LVH 7 KILOS.
 echo 7. NO Blanca (Variable)				D. CESTAS. NO_ ORALIA
-echo 8. CESTAS ALDI (GGN + LOTE)			E. CESTAS ITALIA (no etiqueta cajas)
+echo 8. CESTAS ALDI (GGN + LOTE)			E. CESTAS ITALIA (MAAT x/no etiqueta cajas)
 echo 9. CESTAS ALDI NOVAPRACOSA (GGN + LOTE)		F. CESTAS CODIGO 0013
 echo 						G. CESTAS SPAANSE (Etiqueta caixa Pinyana)
 echo.
@@ -58,7 +59,7 @@ if '%choice%'=='2' goto :NOHUESO
 if '%choice%'=='3' goto :PREPACKING
 if /I '%choice%'=='S' (
 		    set SEMAFORO=0
-		    goto :END2
+		    goto :END3
 )
 if '%choice%'=='4' (
 		   SET ETIQUETA=RIBERA1
@@ -583,8 +584,11 @@ if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CAIXA_LINEAD.LAB" ( del /s \\19
 
 goto :END2
 
-
 :END2
+goto :MENU
+
+
+:END3
 ECHO.
 IF %SEMAFORO%==1 ( ECHO ***************** TOTES LES COPIES REALITZADES !!! ******************** )  ELSE ( ECHO ***************** NO S'HA REALITZAT CAP COPIA !!! ******************** )
 ECHO.
