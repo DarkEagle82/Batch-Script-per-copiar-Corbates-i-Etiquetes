@@ -1,7 +1,7 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-set VERSION=1.5v
+set VERSION=1.6v
 SET DEBUG=ON
 :: SET SEMAFORO=1
 
@@ -103,7 +103,7 @@ if /I '%choice%'=='D' (
 		   )
 if /I '%choice%'=='E' (
 	           SET ETIQUETA=ITALIA
-		   goto :EMALLAR
+		   goto :NECTOMEL
 		   )
 if /I '%choice%'=='F' (
 	           SET ETIQUETA=COD13
@@ -165,6 +165,36 @@ if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CAIXA_LINEAD.LAB" ( copy \\192.
 if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CAIXA_LINEAD.LAB" ( ECHO ETIQUETES LINEAD COPIADES !! )
 rem PAUSE
 GOTO :END
+
+REM ELECCION DE NECTARINA O MELOCOTON
+:NECTOMEL
+cls
+ECHO ver. '%VERSION%'
+echo #### MENU SELECCION NECTARINA O MELOCOTON ####
+echo.
+echo La corbata ha de ser per a Nectarina o per a Pressec ?
+echo 1. NECTARINA (Nectarines)
+echo 2. PRESSEC (Perziken)
+echo S. SORTIR
+echo.
+echo.
+
+set choice=
+set /p choice="Elegeix una Opcio: "
+if not '%choice%'=='' set choice=%choice:~0,1%
+if '%choice%'=='1' (
+                   SET  PRODUCTO=NECTARINES
+		   goto :EMALLAR
+	           )
+if '%choice%'=='2' (
+                   SET  PRODUCTO=PERZIKEN
+		   goto :EMALLAR
+	           )
+if /I '%choice%'=='S' goto :END2
+
+ECHO "%choice%" No es valida. Tria altre cop una opcio
+PAUSE
+
 
 
 REM ETIQUETAS Y CORBATAS (CAMBIAR LAS CORBATAS Y TAMBIEN LA ETIQUETA DE LA MAQUINA PREPACKING)
@@ -229,10 +259,26 @@ IF %ETIQUETA%==ITALIA (
  			ECHO HAS ELEGIT LA ETIQUETA ITALIA
  			PAUSE
 			)
+        IF %PRODUCTO%==NECTARINES (
+	IF %DEBUG%==ON ( 
+ 			ECHO HAS ELEGIT LA ETIQUETA ITALIA I PRODUCTE NECTARINES
+ 			PAUSE
+			)
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_italia_CESTAS_EAN8_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_italia_CESTAS_EAN8_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_italia_CESTAS_EAN8_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_italia_CESTAS_EAN8_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
+	)
+	IF %PRODUCTO%==PERZIKEN (
+		IF %DEBUG%==ON ( 
+ 			ECHO HAS ELEGIT LA ETIQUETA ITALIA I PRODUCTE MELOCOTON
+ 			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\perziken_italia_CESTAS_EAN8_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\perziken_italia_CESTAS_EAN8_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\perziken_italia_CESTAS_EAN8_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\perziken_italia_CESTAS_EAN8_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
+	)	
  )
 IF %ETIQUETA%==COD13 (
  	IF %DEBUG%==ON ( 
@@ -585,6 +631,7 @@ if exist "\\192.168.1.10\c\ETIQUETAS\Utilitzades\CAIXA_LINEAD.LAB" ( del /s \\19
 goto :END2
 
 :END2
+PAUSE
 goto :MENU
 
 
