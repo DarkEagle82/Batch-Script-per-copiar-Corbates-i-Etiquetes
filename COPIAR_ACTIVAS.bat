@@ -1,9 +1,13 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-set VERSION=1.0v
+set VERSION=1.2v
 SET DEBUG=ON
 SET SEMAFORO=1
+
+REM.-- Set the window title
+SET title=Programa Manicuplacio
+TITLE %title%
 
 REM COLOR
 REM   0 = Negro       8 = Gris
@@ -21,29 +25,28 @@ cls
 ECHO ver. '%VERSION%'
 ECHO.
 color F
-echo #### MENU ETIQUETES ####
+echo ############ MENU ETIQUETES ###################
 echo.
-echo 1.- Utilitzar l'etiqueta de Pinyana Hueso
-echo 2.- Utilitzar l'etiqueta de Pinyana SIN Hueso
-echo 3.- Etiqueta Lliure (Sergi)
-ECHO S.- SORTIR
+echo 1. Utilitzar l'etiqueta de Pinyana Hueso
+echo 2. Utilitzar l'etiqueta de Pinyana SIN Hueso
+echo 3. Etiqueta Lliure (Sergi)
+ECHO S. SORTIR
 echo.
-echo ########################
+echo ###############################################
 echo.
 echo.
-echo #### MENU ETIQUETES PER DEFECTE ###################
+echo ############################ MENU ETIQUETES PER DEFECTE ##############################################
 echo.
-echo 4.- ETIQUETA RIBERA1
-echo 5.- ETIQUETA RIBERA2
-echo 6.- ETIQUETA RIBERA2 NOVAPRACOSA (ALDI 7KG)
-echo 7.- NO Blanca (Variable)
-echo 8.- CESTAS ALDI (GGN + LOTE)
-echo 9.- CESTAS ALDI NOVAPRACOSA (GGN + LOTE)
-echo A.- CESTAS Nectarina Supermercat (Europool System)
+echo 4. ETIQUETA RIBERA1				A. CESTAS. Nectarina. Super Mercat
+echo 5. ETIQUETA RIBERA2				B. CESTAS. Nectarina. Super Mercat2. NOVAPRACOSA
+echo 6. ETIQUETA RIBERA2 NOVAPRACOSA (ALDI 7KG)
+echo 7. NO Blanca (Variable)
+echo 8. CESTAS ALDI (GGN + LOTE)
+echo 9. CESTAS ALDI NOVAPRACOSA (GGN + LOTE) 
 echo.
-echo ###################################################
+echo ######################################################################################################
 ECHO.
-ECHO S.- SORTIR
+ECHO S. SORTIR
 ECHO.
 
 set choice=
@@ -52,7 +55,7 @@ if not '%choice%'=='' set choice=%choice:~0,1%
 if '%choice%'=='1' goto :HUESO
 if '%choice%'=='2' goto :NOHUESO
 if '%choice%'=='3' goto :PREPACKING
-if '%choice%'=='S' (
+if /I '%choice%'=='S' (
 		    set SEMAFORO=0
 		    goto :END2
 )
@@ -80,8 +83,12 @@ if '%choice%'=='9' (
 	           SET ETIQUETA=CESTASALDIN
 		   goto :EMALLAR
 		   )
-if '%choice%'=='A' (
+if /I '%choice%'=='A' (
 	           SET ETIQUETA=CESTASEPS
+		   goto :EMALLAR
+		   )
+if /I '%choice%'=='B' (
+	           SET ETIQUETA=CESTASEPS2
 		   goto :EMALLAR
 		   )
 
@@ -173,6 +180,17 @@ IF %ETIQUETA%==CESTASEPS (
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
  )
+IF %ETIQUETA%==CESTASEPS2 (
+ 	IF %DEBUG%==ON ( 
+ 			ECHO HAS EEGIT LA ETIQUETA EUROPOOL SYSTEM 2 
+ 			PAUSE
+			)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_GGN_lote_EAN13_NOVAPRACOSA_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_GGN_lote_EAN13_NOVAPRACOSA_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_GGN_lote_EAN13_NOVAPRACOSA_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_GGN_lote_EAN13_NOVAPRACOSA_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_GGN_lote_NOVAPRACOSA_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
+ )
 
 GOTO :END2
 
@@ -184,11 +202,11 @@ ECHO ver. '%VERSION%'
 echo #### MENU SELECCION MAQUINA ETIQUETA %ETIQUETA% ####
 echo.
 echo Quina maquina ha de tenir la Etiqueta de %ETIQUETA% ?
-echo 1.- SAMO
-echo 2.- MONOCALIBRE VIEJA
-echo 3.- MONOCALIBRE NUEVA (LINEAD)
-echo 4.- TODAS las Maquinas.
-echo S.- SORTIR
+echo 1. SAMO
+echo 2. MONOCALIBRE VIEJA
+echo 3. MONOCALIBRE NUEVA (LINEAD)
+echo 4. TODAS las Maquinas.
+echo S. SORTIR
 echo.
 echo.
 
@@ -211,7 +229,7 @@ if '%choice%'=='4' (
                    SET  MAQUINA=TODAS
 		   goto :COPIAR
 	           )
-if '%choice%'=='S' goto :END2
+if /I '%choice%'=='S' goto :END2
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
 PAUSE
@@ -363,11 +381,11 @@ ECHO ver. '%VERSION%'
 echo #### MENU SELECCION MAQUINA ETIQUETA HUESO ####
 echo.
 echo Quina maquina ha de tenir la Etiqueta de Pinyana HUESO ?
-echo 1.- SAMO
-echo 2.- MONOCALIBRE VIEJA
-ECHO 3.- MONOCALIBRE NUEVA (LINEAD)
-echo 4.- TODAS las Maquinas.
-echo S.- SORTIR
+echo 1. SAMO
+echo 2. MONOCALIBRE VIEJA
+ECHO 3. MONOCALIBRE NUEVA (LINEAD)
+echo 4. TODAS las Maquinas.
+echo S. SORTIR
 echo.
 echo.
 
@@ -378,7 +396,7 @@ if '%choice%'=='1' goto :HUESOSAMO
 if '%choice%'=='2' goto :HUESOMONO
 if '%choice%'=='3' goto :HUESOLINEAD
 if '%choice%'=='4' goto :HUESOTODAS
-if '%choice%'=='S' goto :END2
+if /I '%choice%'=='S' goto :END2
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
 PAUSE
@@ -392,11 +410,11 @@ ECHO ver. '%VERSION%'
 echo #### MENU SELECCION MAQUINA ETIQUETA NOHUESO ####
 echo.
 echo Quina maquina ha de tenir la Etiqueta de Pinyana NOHUESO ?
-echo 1.- SAMO
-echo 2.- MONOCALIBRE VIEJA
-ECHO 3.- MONOCALIBRE NUEVA (LINEAD)
-echo 4.- TODAS las Maquinas.
-echo S.- SORTIR
+echo 1. SAMO
+echo 2. MONOCALIBRE VIEJA
+ECHO 3. MONOCALIBRE NUEVA (LINEAD)
+echo 4. TODAS las Maquinas.
+echo S. SORTIR
 echo.
 echo.
 
@@ -407,7 +425,7 @@ if '%choice%'=='1' goto :NOHUESOSAMO
 if '%choice%'=='2' goto :NOHUESOMONO
 if '%choice%'=='3' goto :NOHUESOLINEAD
 if '%choice%'=='4' goto :NOHUESOTODAS
-if '%choice%'=='S' goto :END2
+if /I '%choice%'=='S' goto :END2
 
 ECHO "%choice%" No es valida. Tria altre cop una opcio
 PAUSE
