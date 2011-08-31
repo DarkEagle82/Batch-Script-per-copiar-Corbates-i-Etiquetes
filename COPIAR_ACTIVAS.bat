@@ -1,11 +1,10 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-set VERSION=1.7v
+set VERSION=1.8v
 SET DEBUG=ON
 :: SET SEMAFORO=1
-
-:: TODO: Unset variables al END2
+set PRODUCTO=NULL
 
 REM.-- Set the window title
 SET title=Programa Manicuplacio
