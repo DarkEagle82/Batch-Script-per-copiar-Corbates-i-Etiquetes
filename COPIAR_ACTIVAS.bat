@@ -1,7 +1,7 @@
 @ECHO OFF
 
 REM Coded by Sergi. 12/08/2011
-set VERSION=2.0v
+set VERSION=2.1v
 SET DEBUG=ON
 set PRODUCTO=NULL
 SET ESPERA=8
@@ -35,6 +35,7 @@ echo.
 echo 1. Utilitzar l'etiqueta de Pinyana Hueso
 echo 2. Utilitzar l'etiqueta de Pinyana SIN Hueso
 echo 3. Etiqueta Lliure (Sergi)
+echo CC. Copiar d'una maquina a una altra 
 echo R. Repetir l'ultima imatge
 ECHO S. SORTIR
 echo.
@@ -43,11 +44,11 @@ echo.
 echo.
 echo ############################ MENU ETIQUETES PER DEFECTE ##############################################
 echo.
-echo 4. ETIQUETA RIBERA1				A. CESTAS. Nectarina. Super Mercat
+echo 4. ETIQUETA RIBERA1 GGN				A. CESTAS. Nectarina IBERIANA NO QS  A8. CON QS
 echo 5. ETIQUETA RIBERA2 GGN				B. CESTAS. Nectarina. Super Mercat2. NOVAPRACOSA
 echo 6. ETIQUETA RIBERA2 NOVAPRACOSA (ALDI 7KG)	C. LVH 7 KILOS.
 echo 7. NO Blanca (Variable)				D. CESTAS. NO_ ORALIA
-echo 8. CESTAS ALDI (GGN + LOTE)			E. CESTAS ITALIA (MAAT x/no etiqueta cajas)
+echo 8. CESTAS ALDI (GGN + LOTE) (88 SIN EAN)	E. CESTAS ITALIA (MAAT x/no etiqueta cajas)
 echo 9. CESTAS ALDI NOVAPRACOSA (GGN + LOTE)		F. CESTAS CODIGO 0013
 echo 						G. CESTAS SPAANSE (Etiqueta caixa Pinyana)
 echo.
@@ -58,7 +59,9 @@ ECHO.
 
 set choice=
 set /p choice="Elegeix una Opcio: "
-if not '%choice%'=='' set choice=%choice:~0,1%
+REM Digitos para la opcion
+if not '%choice%'=='' set choice=%choice:~0,2%
+REM OPCIONES
 if '%choice%'=='1' goto :HUESO
 if '%choice%'=='2' goto :NOHUESO
 if '%choice%'=='3' goto :PREPACKING
@@ -75,6 +78,8 @@ if /I '%choice%'=='R' (
 		IF %AUTOCLOSE%==1 (
 			ping -n %ESPERA% localhost>nul
 			TASKKILL /IM rundll32.exe
+			pause
+			goto :MENU
 		)		
 	)
 	echo.
@@ -87,25 +92,36 @@ if /I '%choice%'=='S' (
 	set SEMAFORO=0
 	goto :END3
 )
+if '%choice%'=='CC' goto :CC
 if '%choice%'=='4' (
 	SET ETIQUETA=RIBERA1
-	SET COMANDA=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\Ribera1_CAIXA_VAR.jpg
+	SET COMANDA=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\Ribera1_CAIXA_VAR_nova.jpg
+	SET COMANDA2=NULL
 	goto :MAQUINA
 ) 
 if '%choice%'=='5' (
 	SET ETIQUETA=RIBERA2
 	SET COMANDA=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\Ribera2_CAIXA_VAR.jpg
+	SET COMANDA2=NULL
 	goto :MAQUINA
 )
 if '%choice%'=='6' (
     SET ETIQUETA=RIBERA2N
 	SET COMANDA=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA2_CAIXA_NOVAPRACOSA_VAR.jpg
+	SET COMANDA2=NULL
     goto :MAQUINA
 )
 if '%choice%'=='7' (
     SET ETIQUETA=NOCODIGO
 	SET COMANDA=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\NO_blanca_VAR_CAIXA.jpg   
-    goto :MAQUINA
+    	SET COMANDA2=NULL
+	goto :MAQUINA
+)
+if /I '%choice%'=='88' (
+    SET ETIQUETA=CESTASALDI88
+rem	SET COMANDA=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\Ribera2_CAIXA_VAR.jpg
+	SET COMANDA2=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\NEKTARINEN_gelbfleischig_lote_ggn_CORB_VAR.jpg
+	goto :EMALLAR
 )
 if '%choice%'=='8' (
     SET ETIQUETA=CESTASALDI
@@ -121,7 +137,13 @@ if '%choice%'=='9' (
 )
 if /I '%choice%'=='A' (
     SET ETIQUETA=CESTASEPS
-	SET COMANDA=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_VAR_CAIXA.LAB.jpg
+	SET COMANDA=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_VAR_CAIXA.jpg
+	SET COMANDA2=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.jpg
+    goto :EMALLAR
+)
+if /I '%choice%'=='A8' (
+    SET ETIQUETA=CESTASEPS8
+	SET COMANDA=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_VAR_CAIXA_QS.jpg
 	SET COMANDA2=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleishig_CESTAS_pinyana_EAN13_VAR_CORB.jpg
     goto :EMALLAR
 )
@@ -145,11 +167,13 @@ if /I '%choice%'=='E' (
 )
 if /I '%choice%'=='F' (
     SET ETIQUETA=COD13
+	SET COMANDA=NULL
 	SET COMANDA2=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarines_GGN_COD13_VAR.jpg
     goto :EMALLAR
 )
 if /I '%choice%'=='G' (
     SET ETIQUETA=SPAANSE
+	SET COMANDA=NULL
 	SET COMANDA2=start rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen \\192.168.1.10\c\ETIQUETAS\Utilitzades\nectarine_spaanse_EAN8_VAR.jpg
     goto :EMALLAR
 )
@@ -157,6 +181,108 @@ if /I '%choice%'=='G' (
 ECHO "%choice%" No es valida. Tria altre cop una opcio
 PAUSE
 GOTO :MENU
+
+REM COPIAR ETIQUETA D'UNA MAQUINA A UNA ALTRA
+
+:CC
+
+cls
+ECHO ver. '%VERSION%'
+echo #### MENU SELECCION MAQUINA ORIGEN ####
+echo.
+echo Maquina origen a copiar ?
+echo 1. SAMO
+echo 2. MONOCALIBRE VIEJA
+echo 3. MONOCALIBRE NUEVA (LINEAD)
+echo S. SORTIR
+echo.
+echo.
+
+set choice=
+set /p choice="Elegeix una Opcio: "
+if not '%choice%'=='' set choice=%choice:~0,1%
+
+if '%choice%'=='1' (
+    SET ORIGEN=SAMO
+	goto :MENUCOPY
+)
+if '%choice%'=='2' (
+	SET ORIGEN=MONO
+    goto :MENUCOPY
+)
+if '%choice%'=='3' (
+	SET ORIGEN=LINEAD
+    goto :MENUCOPY
+)
+if /I '%choice%'=='S' goto :END2
+
+ECHO "%choice%" No es valida. Tria altre cop una opcio
+PAUSE
+
+:MENUCOPY
+
+cls
+ECHO ver. '%VERSION%'
+echo #### MENU SELECCION MAQUINA DESTINO ####
+echo.
+echo La Màquina ORIGEN es: %ORIGEN%
+echo Maquina desti a copiar ?
+echo 1. SAMO
+echo 2. MONOCALIBRE VIEJA
+echo 3. MONOCALIBRE NUEVA (LINEAD)
+echo S. SORTIR
+echo.
+echo.
+
+set choice=
+set /p choice="Elegeix una Opcio: "
+if not '%choice%'=='' set choice=%choice:~0,1%
+
+if '%choice%'=='1' (
+    SET DESTI=SAMO
+	goto :COMMANDCOPY
+)
+if '%choice%'=='2' (
+	SET DESTI=MONO
+    goto :COMMANDCOPY
+)
+if '%choice%'=='3' (
+	SET DESTI=LINEAD
+    goto :COMMANDCOPY
+)
+if /I '%choice%'=='S' goto :END2
+
+ECHO "%choice%" No es valida. Tria altre cop una opcio
+PAUSE
+
+:COMMANDCOPY
+
+SET SSAMO=\\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+SET SMONO=\\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+SET SLINEAD=\\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+IF %ORIGEN%==SAMO (
+SET ORIGEN1=%SSAMO%
+)
+IF %ORIGEN%==MONO (
+SET ORIGEN1=%SMONO%
+)
+IF %ORIGEN%==LINEAD (
+SET ORIGEN1=%SLINEAD%
+)
+IF %DESTI%==SAMO (
+SET DESTI1=%SSAMO%
+)
+IF %DESTI%==MONO (
+SET DESTI1=%SMONO%
+)
+IF %DESTI%==LINEAD (
+SET DESTI1=%SLINEAD%
+)
+
+ECHO HAS ELEGIT COM A ORIGEN %ORIGEN% I DESTI %DESTI%
+REM ECHO COPY %ORIGEN1% %DESTI1%
+COPY %ORIGEN1% %DESTI1%
+GOTO :END2
 
 
 REM COPIAR ETIQUETES PREPACKING
@@ -289,6 +415,29 @@ IF %ETIQUETA%==CESTASALDI (
 	)	
 )
 
+IF %ETIQUETA%==CESTASALDI88 (
+ 	IF %DEBUG%==ON ( 
+ 			ECHO HAS ELEGIT LA ETIQUETA ALDI SENSE CODI DE BARRES
+ 			PAUSE
+		)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NEKTARINEN_gelbfleischig_lote_ggn_CORB_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NEKTARINEN_gelbfleischig_lote_ggn_CORB_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NEKTARINEN_gelbfleischig_lote_ggn_CORB_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\NEKTARINEN_gelbfleischig_lote_ggn_CORB_VAR.lab \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\PIÑANA3Hueso_GGN.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
+	
+	%COMANDA%
+	IF %AUTOCLOSE%==1 (
+		ping -n %ESPERA% localhost>nul
+		TASKKILL /IM rundll32.exe
+	)
+	%COMANDA2%
+	IF %AUTOCLOSE%==1 (
+		ping -n %ESPERA% localhost>nul
+		TASKKILL /IM rundll32.exe
+	)	
+)
+
 IF %ETIQUETA%==CESTASALDIN (
  	IF %DEBUG%==ON ( 
  			ECHO HAS ELEGIT LA ETIQUETA ALDI NOVAPRACOSA
@@ -322,6 +471,29 @@ IF %ETIQUETA%==CESTASEPS (
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
 	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_VAR_CAIXA.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
+	
+	%COMANDA%
+	IF %AUTOCLOSE%==1 (
+		ping -n %ESPERA% localhost>nul
+		TASKKILL /IM rundll32.exe
+	)
+	%COMANDA2%
+	IF %AUTOCLOSE%==1 (
+		ping -n %ESPERA% localhost>nul
+		TASKKILL /IM rundll32.exe
+	)
+)
+
+IF %ETIQUETA%==CESTASEPS8 (
+ 	IF %DEBUG%==ON ( 
+ 			ECHO HAS ELEGIT LA ETIQUETA LIBERIANA AMB QS 
+ 			PAUSE
+		)
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA1.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA2.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_EAN13_VAR_CORB.LAB \\192.168.1.10\c\ETIQUETAS\CORBATA3.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\nektarinen_gelbfleischig_CESTAS_pinyana_VAR_CAIXA_QS.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_PREPACKING.LAB
 	
 	%COMANDA%
 	IF %AUTOCLOSE%==1 (
@@ -536,30 +708,30 @@ IF %ETIQUETA%==RIBERA1 (
 			ECHO HAS ELEGIT LA ETIQUETA RIBERA1 I LA MAQUINA SAMO 
 			PAUSE
 		)
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR_nova.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
     )
 	IF %MAQUINA%==MONOCALIBRE (
 	IF %DEBUG%==ON ( 
 			ECHO HAS ELEGIT LA ETIQUETA RIBERA1 I LA MAQUINA MONOCALIBRE
 			PAUSE
 			)
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR_nova.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
     )
 	IF %MAQUINA%==LINEAD (
 	IF %DEBUG%==ON ( 
 			ECHO HAS ELEGIT LA ETIQUETA RIBERA1 I LA MAQUINA LINEAD 
 			PAUSE
 			)
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR_nova.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
     )
 	IF %MAQUINA%==TODAS (
 	IF %DEBUG%==ON ( 
 			ECHO HAS ELEGIT LA ETIQUETA RIBERA1 i TOTES les Maquines 
 			PAUSE
 	)
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
-	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR.LAB \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR_nova.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_SAMO.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR_nova.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_MONOCALIBRE.LAB
+	copy \\192.168.1.10\c\ETIQUETAS\Utilitzades\RIBERA1_CAIXA_VAR_nova.lab \\192.168.1.10\c\ETIQUETAS\CAIXA_LINEAD.LAB
     )
 	%COMANDA%
 	IF %AUTOCLOSE%==1 (
